@@ -1,0 +1,41 @@
+* {
+  margin: 0px;
+}
+
+.App {
+  background-color: slategray;
+  height: 100vh;
+  padding: 16px;
+}
+
+.chart-container {
+  position: relative;
+  width: 100%;
+}
+
+.x-axis {
+  border-top: dashed 1px #fff;
+  display: flex;
+  justify-content: space-between;
+  padding-top: 12px;
+}
+
+.fiter-container {
+  display: flex;
+  justify-content: center;
+  gap: ;
+}
+
+.filter {
+  border-radius: 24px;
+  font-weight: bold;
+  padding: 8px 16px;
+  background-color: black;
+  color: #fff;
+  font-size: 20px;
+}
+
+.active-filter {
+  background-color: #fff;
+  color: green;
+}
