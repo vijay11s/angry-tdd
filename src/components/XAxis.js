@@ -1,21 +1,41 @@
 import { useEffect, useState } from "react";
+import moment from "moment";
 
-function XAxis({ data }) {
+function XAxis({ dataset, activeFilter, screenSize }) {
   const [axisData, setAxisData] = useState([]);
 
-  useEffect(() => {
-    const newAxisData = [];
-    let currentIndex = 0;
-    while (currentIndex < data.length) {
-      console.log(currentIndex, "CURENT IN");
-      const time = new Date(data[currentIndex].time);
-      const hours = time.getHours();
-      const minutes = time.getMinutes();
-      newAxisData.push(`${hours}:${minutes}`);
-      currentIndex += 20;
+  function generateXAxis(data) {
+    let xAxisData = [];
+    let numPoints;
+    let timeStyle = null;
+    if (activeFilter === "DAY") {
+      timeStyle = "hh:mm A";
+    } else if (activeFilter === "5_YEAR") {
+      timeStyle = "YYYY";
+    } else if (activeFilter === "YEAR") {
+      timeStyle = "DD MMM YY";
+    } else {
+      timeStyle = "DD MMM";
     }
+    if (screenSize === "large") {
+      numPoints = 5;
+    } else if (screenSize === "medium") {
+      numPoints = 3;
+    } else {
+      numPoints = 2;
+    }
+    const interval = Math.floor(data.length / numPoints);
+    for (let i = 0; i < data.length; i += interval) {
+      xAxisData.push(moment(data[i].timestamp).format(timeStyle));
+      if (xAxisData.length === numPoints) break;
+    }
+    return xAxisData;
+  }
+
+  useEffect(() => {
+    const newAxisData = generateXAxis(dataset);
     setAxisData(newAxisData);
-  }, []);
+  }, [activeFilter, screenSize]);
 
   return (
     <div className="x-axis">
