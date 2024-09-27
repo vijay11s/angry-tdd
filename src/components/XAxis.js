@@ -4,7 +4,7 @@ import moment from "moment";
 function XAxis({ dataset, activeFilter, screenSize }) {
   const [axisData, setAxisData] = useState([]);
 
-  function generateXAxis(data) {
+  function generateXAxis(data, activeFilter, screenSize) {
     let xAxisData = [];
     let numPoints;
     let timeStyle = null;
@@ -33,9 +33,9 @@ function XAxis({ dataset, activeFilter, screenSize }) {
   }
 
   useEffect(() => {
-    const newAxisData = generateXAxis(dataset);
+    const newAxisData = generateXAxis(dataset, activeFilter, screenSize);
     setAxisData(newAxisData);
-  }, [activeFilter, screenSize]);
+  }, [dataset, screenSize]);
 
   return (
     <div className="x-axis">
